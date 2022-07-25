@@ -1,0 +1,29 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=phone_book_test
+  web:
+    build: .
+    volumes:
+      - .:/code
+    ports:
+      - "9000:9000"
+    depends_on:
+      - postgres
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=jainmanal98@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=manaladmin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
